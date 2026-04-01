@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plano de Saúde Cáceres - Iniciante</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .nav-btn.active { border-bottom: 3px solid #2563eb; color: #1e40af; font-weight: 700; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.2s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <h1 class="text-xl font-bold text-slate-800">Plano <span class="text-blue-600">Cáceres</span></h1>
+            <nav class="hidden md:flex space-x-6 h-full">
+                <button onclick="switchTab('diet')" class="nav-btn active h-full px-2">Dieta 7 Dias</button>
+                <button onclick="switchTab('training')" class="nav-btn h-full px-2">Treino Iniciante</button>
+                <button onclick="switchTab('prep')" class="nav-btn h-full px-2">Mercado & Prep</button>
+            </nav>
+            <button class="md:hidden text-2xl" onclick="toggleMenu()">☰</button>
+        </div>
+        <div id="mobile-menu" class="hidden bg-white border-t p-4 flex flex-col gap-4">
+            <button onclick="switchTab('diet'); toggleMenu()" class="font-bold">Dieta 7 Dias</button>
+            <button onclick="switchTab('training'); toggleMenu()" class="font-bold">Treino Iniciante</button>
+            <button onclick="switchTab('prep'); toggleMenu()" class="font-bold">Mercado & Prep</button>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-6xl mx-auto w-full p-4 md:p-8">
+
+        <!-- TAB: DIETA -->
+        <section id="tab-diet" class="tab-content active">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold">Plano Alimentar Semanal (Sem Vagens)</h2>
+                <p class="text-slate-600">Recomposição: 1,85m | 75kg. Almoço = Jantar.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-7 gap-2 mb-8 overflow-x-auto pb-2">
+                <button onclick="renderDay('Segunda')" class="day-link bg-blue-600 text-white px-4 py-2 rounded-lg font-bold min-w-[100px]">Segunda</button>
+                <button onclick="renderDay('Terça')" class="day-link bg-white border px-4 py-2 rounded-lg font-bold min-w-[100px]">Terça</button>
+                <button onclick="renderDay('Quarta')" class="day-link bg-white border px-4 py-2 rounded-lg font-bold min-w-[100px]">Quarta</button>
+                <button onclick="renderDay('Quinta')" class="day-link bg-white border px-4 py-2 rounded-lg font-bold min-w-[100px]">Quinta</button>
+                <button onclick="renderDay('Sexta')" class="day-link bg-white border px-4 py-2 rounded-lg font-bold min-w-[100px]">Sexta</button>
+                <button onclick="renderDay('Sábado')" class="day-link bg-white border px-4 py-2 rounded-lg font-bold min-w-[100px]">Sábado</button>
+                <button onclick="renderDay('Domingo')" class="day-link bg-white border px-4 py-2 rounded-lg font-bold min-w-[100px]">Domingo</button>
+            </div>
+
+            <div id="day-container" class="bg-white rounded-2xl shadow-sm border p-6">
+                <!-- Conteúdo do dia via JS -->
+            </div>
+        </section>
+
+        <!-- TAB: TREINO -->
+        <section id="tab-training" class="tab-content">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold">Treinamento Adaptado: Nível Iniciante</h2>
+                <p class="text-slate-600 italic">Estrutura mantida, exercícios simplificados para base de força.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Treino A -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-blue-600">
+                    <h3 class="font-bold text-xl mb-2 text-blue-700">Treino A: Superior (Segunda & Quinta)</h3>
+                    <p class="text-xs text-slate-500 mb-4">Foco: Empurrar, Puxar e Core.</p>
+                    <div class="space-y-4">
+                        <div class="p-3 bg-slate-50 rounded border">
+                            <p class="font-bold">1. Flexão com Joelhos no Chão</p>
+                            <p class="text-sm">3 séries de 8 a 12 repetições | Descanso: 90 seg.</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded border">
+                            <p class="font-bold">2. Remada Sentada com Elástico</p>
+                            <p class="text-sm">3 séries de 12 a 15 repetições | Descanso: 60 seg.</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded border">
+                            <p class="font-bold">3. Tríceps no Banco (Dips Adaptados)</p>
+                            <p class="text-sm">3 séries de 10 repetições | Descanso: 60 seg.</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded border">
+                            <p class="font-bold">4. Prancha Alta (Braços estendidos)</p>
+                            <p class="text-sm">3 séries de 30 segundos | Descanso: 60 seg.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Treino B -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-emerald-600">
+                    <h3 class="font-bold text-xl mb-2 text-emerald-700">Treino B: Inferior (Terça & Sexta)</h3>
+                    <p class="text-xs text-slate-500 mb-4">Foco: Membros Inferiores e Core.</p>
+                    <div class="space-y-4">
+                        <div class="p-3 bg-slate-50 rounded border">
+                            <p class="font-bold">1. Agachamento na Cadeira (Box Squat)</p>
+                            <p class="text-sm">3 séries de 15 repetições | Descanso: 60 seg.</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded border">
+                            <p class="font-bold">2. Elevação Pélvica no Chão (Ponte)</p>
+                            <p class="text-sm">3 séries de 15 repetições | Descanso: 60 seg.</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded border">
+                            <p class="font-bold">3. Afundo Estático (Split Squat)</p>
+                            <p class="text-sm">3 séries de 8 reps cada perna | Descanso: 90 seg.</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded border">
+                            <p class="font-bold">4. Abdominal Infra (Joelhos dobrados)</p>
+                            <p class="text-sm">3 séries de 12 repetições | Descanso: 60 seg.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 bg-slate-800 text-white p-6 rounded-2xl">
+                <h3 class="font-bold text-lg mb-2">Quarta & Sábado: Cardio Zona 2</h3>
+                <p class="text-sm opacity-80 mb-4">Caminhada rápida em ritmo constante. Você deve conseguir falar frases curtas, mas estar ofegante.</p>
+                <p class="font-bold text-yellow-400">Duração: 45 a 60 minutos.</p>
+                <p class="text-xs mt-2 italic">* Domingo: Descanso total (Recuperação Sistêmica).</p>
+            </div>
+        </section>
+
+        <!-- TAB: PREP & MERCADO -->
+        <section id="tab-prep" class="tab-content">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Lista Compras -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border">
+                    <h3 class="font-bold text-xl mb-4 text-blue-800 underline">Lista de Compras Robusta (Mercadona)</h3>
+                    <div class="space-y-4 text-sm">
+                        <div class="bg-blue-50 p-3 rounded">
+                            <p class="font-bold">Proteínas (Bases Semanais):</p>
+                            <ul class="list-disc ml-4 mt-1 text-slate-700">
+                                <li>Peito de Frango (Bandeja familiar): 1.5kg (~11€)</li>
+                                <li>Peru (Dados ou Bifes): 1kg (~8€)</li>
+                                <li>Ovos Classe L (24 unid): (~4.50€)</li>
+                                <li>Lentilhas Cozidas (3-4 potes de vidro): (~3€)</li>
+                            </ul>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded">
+                            <p class="font-bold">Laticínios e Carboidratos:</p>
+                            <ul class="list-disc ml-4 mt-1 text-slate-700">
+                                <li>Iogurte Natural Hacendado (2 packs de 6): (~2.40€)</li>
+                                <li>Queijo Gouda ou Edam (Fatias): (~2.20€)</li>
+                                <li>Arroz Integral (1kg): (~1.30€)</li>
+                                <li>Aveia em Flocos (500g): (~1€)</li>
+                                <li>Pão Integral Sementes: (~1.50€)</li>
+                            </ul>
+                        </div>
+                        <div class="bg-emerald-50 p-3 rounded">
+                            <p class="font-bold">Hortifruti (Zona de Oferta):</p>
+                            <ul class="list-disc ml-4 mt-1 text-slate-700">
+                                <li>Maçãs e Mexericas (Rede de 1.5kg-2kg): (~3.50€)</li>
+                                <li>Brócolis e Abobrinhas: (~3€)</li>
+                                <li>Cenouras (Saco 1kg): (~0.80€)</li>
+                            </ul>
+                        </div>
+                        <p class="text-xs font-bold text-slate-500 italic">* Estimativa Total Mensal: ~100€ (Dividido em ~25€/semana).</p>
+                    </div>
+                </div>
+
+                <!-- Meal Prep -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-orange-100">
+                    <h3 class="font-bold text-xl mb-4 text-orange-800">Guia de Meal Prep Detalhado</h3>
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h4 class="font-bold text-blue-800">Domingo: A Grande Preparação</h4>
+                            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                                1. **Arroz Integral:** Cozinhe 350g (peso seco) para render as porções de Segunda a Quarta.<br>
+                                2. **Frango Base:** Grelhe 800g de frango com sal, orégano e pouco azeite. Divida em potes.<br>
+                                3. **Vegetais:** Higienize os brócolis e as cenouras. Deixe as cenouras em palitos em água na geladeira (lanche crocante).<br>
+                                4. **Potes do Dia:** Já deixe as maçãs e o queijo do pré-treino separados.
+                            </p>
+                        </div>
+                        <div class="border-l-4 border-emerald-500 pl-4">
+                            <h4 class="font-bold text-emerald-800">Quarta-feira: Reforço de Meio de Semana</h4>
+                            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                                1. **Troca de Proteína:** Prepare o Peru (700g-800g). Isso evita o enjoo do frango.<br>
+                                2. **Novo Arroz/Lentilha:** Cozinhe o restante do arroz ou abra os potes de lentilha. Escorra bem a lentilha do vidro.<br>
+                                3. **Abobrinhas:** Refogue a abobrinha com alho na hora (leva 5 min e fica fresca).
+                            </p>
+                        </div>
+                        <div class="bg-slate-100 p-4 rounded-xl text-center text-sm">
+                            <p><strong>Dica de Cáceres:</strong> O Mercadona perto da Plaza Mayor costuma repor frutas frescas às segundas cedo. Ótimo para pegar as melhores maçãs!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        function switchTab(id) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + id).classList.add('active');
+            const btn = Array.from(document.querySelectorAll('.nav-btn')).find(b => b.innerText.toLowerCase().includes(id.substring(0,3)));
+            if(btn) btn.classList.add('active');
+        }
+
+        function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
+
+        const dietData = {
+            "Segunda": { base: "Frango + Arroz", meals: [
+                { t: "07:00", n: "Pré-Treino", d: "1 Maçã + 1 fatia de Queijo Gouda", q: "150g/20g" },
+                { t: "08:30", n: "Café da Manhã", d: "2 Ovos mexidos + 1 fatia de Pão Integral + Café", q: "100g/25g" },
+                { t: "11:30", n: "Lanche AM", d: "1 Iogurte Natural + 1 colher de Aveia", q: "125g/15g" },
+                { t: "14:00", n: "Almoço", d: "Frango Grelhado + Arroz Integral + Brócolis", q: "150g/120g/100g" },
+                { t: "17:00", n: "Lanche PM", d: "1 fatia de Queijo Gouda + Café", q: "20g" },
+                { t: "20:00", n: "Jantar", d: "REPETE ALMOÇO (Frango + Arroz + Brócolis)", q: "Mesmo peso" }
+            ]},
+            "Terça": { base: "Peru + Lentilha", meals: [
+                { t: "07:00", n: "Pré-Treino", d: "1 Maçã + 1 fatia de Queijo Gouda", q: "150g/20g" },
+                { t: "08:30", n: "Café da Manhã", d: "Tigela de Iogurte (2) + Aveia (3 colheres) + Café", q: "250g/40g" },
+                { t: "11:30", n: "Lanche AM", d: "Palitos de Cenoura", q: "100g" },
+                { t: "14:00", n: "Almoço", d: "Peru Grelhado + Lentilhas + Abobrinha refogada", q: "150g/150g/100g" },
+                { t: "17:00", n: "Lanche PM", d: "1 fatia de Pão Integral + 1 fatia de Queijo", q: "25g/20g" },
+                { t: "20:00", n: "Jantar", d: "REPETE ALMOÇO (Peru + Lentilhas + Abobrinha)", q: "Mesmo peso" }
+            ]},
+            "Quarta": { base: "Frango + Arroz (Dia de Cardio)", meals: [
+                { t: "07:00", n: "Pré-Cardio", d: "1 Mexerica + 1 fatia de Queijo Gouda", q: "100g/20g" },
+                { t: "08:30", n: "Café da Manhã", d: "2 Ovos mexidos + 1 fatia de Pão Integral + Café", q: "100g/25g" },
+                { t: "11:30", n: "Lanche AM", d: "1 Iogurte Natural", q: "125g" },
+                { t: "14:00", n: "Almoço", d: "Frango Grelhado + Arroz Integral + Salada de Cenoura", q: "150g/120g/100g" },
+                { t: "17:00", n: "Lanche PM", d: "1 Iogurte Natural + 1 colher de Aveia", q: "125g/15g" },
+                { t: "20:00", n: "Jantar", d: "REPETE ALMOÇO (Frango + Arroz + Cenoura)", q: "Mesmo peso" }
+            ]},
+            "Quinta": { base: "Peru + Arroz", meals: [
+                { t: "07:00", n: "Pré-Treino", d: "1 Maçã + 1 fatia de Queijo Gouda", q: "150g/20g" },
+                { t: "08:30", n: "Café da Manhã", d: "2 Ovos mexidos + Café (sem pão)", q: "100g" },
+                { t: "11:30", n: "Lanche AM", d: "1 Iogurte Natural + Aveia", q: "125g/15g" },
+                { t: "14:00", n: "Almoço", d: "Peru Grelhado + Arroz Integral + Brócolis", q: "150g/120g/100g" },
+                { t: "17:00", n: "Lanche PM", d: "1 fatia de Pão Integral + Queijo", q: "25g/20g" },
+                { t: "20:00", n: "Jantar", d: "REPETE ALMOÇO (Peru + Arroz + Brócolis)", q: "Mesmo peso" }
+            ]},
+            "Sexta": { base: "Frango + Lentilha", meals: [
+                { t: "07:00", n: "Pré-Treino", d: "1 Maçã + 1 fatia de Queijo Gouda", q: "150g/20g" },
+                { t: "08:30", n: "Café da Manhã", d: "Tigela de Iogurte (2) + Aveia + Café", q: "250g/30g" },
+                { t: "11:30", n: "Lanche AM", d: "Palitos de Cenoura", q: "100g" },
+                { t: "14:00", n: "Almoço", d: "Frango Grelhado + Lentilhas + Abobrinha", q: "150g/150g/100g" },
+                { t: "17:00", n: "Lanche PM", d: "Café + 1 fatia de Queijo Gouda", q: "20g" },
+                { t: "20:00", n: "Jantar", d: "REPETE ALMOÇO (Frango + Lentilhas + Abobrinha)", q: "Mesmo peso" }
+            ]},
+            "Sábado": { base: "Omelete + Arroz (Dia de Cardio)", meals: [
+                { t: "07:00", n: "Pré-Cardio", d: "1 Maçã + Queijo", q: "150g/20g" },
+                { t: "08:30", n: "Café da Manhã", d: "2 Ovos (Omelete) + Café", q: "100g" },
+                { t: "11:30", n: "Lanche AM", d: "1 Iogurte + Aveia", q: "125g/15g" },
+                { t: "14:00", n: "Almoço", d: "Omelete (3 ovos) + Arroz Integral + Brócolis", q: "150g/120g/100g" },
+                { t: "17:00", n: "Lanche PM", d: "Palitos de Cenoura + 1 fatia de Pão Integral", q: "100g/25g" },
+                { t: "20:00", n: "Jantar", d: "Frango Grelhado (Sobras) + Salada de Brócolis", q: "150g/100g" }
+            ]},
+            "Domingo": { base: "Livre com Controle", meals: [
+                { t: "09:00", n: "Café da Manhã", d: "3 Ovos mexidos + 1 fatia de Pão com Queijo + Café", q: "150g/25g/20g" },
+                { t: "12:00", n: "Lanche", d: "1 Maçã", q: "150g" },
+                { t: "14:00", n: "Almoço", d: "Proteína à escolha + Arroz Integral + Legumes à vontade", q: "Livre" },
+                { t: "17:00", n: "Lanche PM", d: "1 Iogurte Natural", q: "125g" },
+                { t: "20:00", n: "Jantar", d: "Sopa de Lentilhas com Legumes e Peru", q: "Prato fundo" }
+            ]}
+        };
+
+        function renderDay(day) {
+            const data = dietData[day];
+            document.querySelectorAll('.day-link').forEach(l => {
+                l.classList.remove('bg-blue-600', 'text-white');
+                l.classList.add('bg-white', 'text-slate-700', 'border');
+                if(l.innerText === day) {
+                    l.classList.remove('bg-white', 'text-slate-700', 'border');
+                    l.classList.add('bg-blue-600', 'text-white');
+                }
+            });
+
+            let html = `
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold text-blue-800">${day}-feira</h3>
+                    <span class="text-xs font-bold bg-blue-100 text-blue-700 px-3 py-1 rounded-full uppercase tracking-wider">${data.base}</span>
+                </div>
+                <div class="space-y-4">
+            `;
+            
+            data.meals.forEach(m => {
+                html += `
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-50 pb-3 last:border-0">
+                        <div class="flex items-center gap-4">
+                            <span class="text-xs font-bold text-slate-400 w-12">${m.t}</span>
+                            <div>
+                                <p class="font-bold text-slate-800 text-sm">${m.n}</p>
+                                <p class="text-xs text-slate-500">${m.d}</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-bold text-blue-500 mt-2 sm:mt-0">${m.q}</span>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            document.getElementById('day-container').innerHTML = html;
+        }
+
+        window.onload = () => renderDay('Segunda');
+    </script>
+</body>
+</html>
